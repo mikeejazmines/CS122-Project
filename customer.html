@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="stylesheet1.css">
+	<link rel="stylesheet" href="stylesheetLato.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="general.css">
+</head>
+
+<body>
+	<div class="w3-top">
+	  	<div class="w3-bar w3-black w3-card-2">
+		    <a class="w3-bar-item w3-button w3-padding-large w3-hide-medium w3-hide-large w3-right" href="javascript:void(0)" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+		    <a href="#" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+		    <a href="order.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">ORDER</a>
+		    <a href="transaction.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">TRANSACTIONS</a>
+		    <a href="inventory.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">INVENTORY</a>
+	    	<div class="w3-dropdown-hover w3-hide-small">
+	     		 <button class="w3-padding-large w3-button" title="More">REPORT <i class="fa fa-caret-down"></i></button>     
+	      		<div class="w3-dropdown-content w3-bar-block w3-card-4">
+			        <a href="sales.html" class="w3-bar-item w3-button">Sales</a>
+			        <a href="customer.html" class="w3-bar-item w3-button">Customers</a>
+			        <a href="agent.html" class="w3-bar-item w3-button">Agent</a>
+	      		</div>
+	    	</div>
+	  	</div>
+	</div>
+
+	<div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="tour">
+		<h1 class="w3-wide w3-center">CUSTOMER REPORT</h1>
+		<form>
+			<a class="w3-button w3-black w3-section" id="dayB">DAY</a>
+			<a class="w3-button w3-black w3-section" id="weekB">WEEK</a>
+			<a class="w3-button w3-black w3-section" id="monthB">MONTH</a>
+			<a class="w3-button w3-black w3-section" id="yearB">YEAR</a>
+			
+			<div  id="day">
+				<input class="w3-input w3-border" type="date">
+			</div>
+			<div id="week" style="display:none">
+				<input class="w3-input w3-border" type="week">
+			</div>
+			<div id="month" style="display:none">
+				<input class="w3-input w3-border" type="month">
+			</div>
+			<div id="year" style="display:none">
+				<input class="w3-input w3-border" type="year" placeholder="yyyy">
+			</div>
+
+		    <button class="w3-button w3-black w3-section w3-right" type="submit">SEND</button>
+		</form>
+	</div>
+
+	<script src="report.js"></script>
+</body>
+</html>

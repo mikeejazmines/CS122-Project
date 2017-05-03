@@ -1,0 +1,6 @@
+.o-input{padding:8px; display:inline; border:none;border-bottom:1px solid #ccc;width:100%;}
+
+.on{display:;}
+.off{display:none;}
+
+.selected{color:black; background-color: teal;}
