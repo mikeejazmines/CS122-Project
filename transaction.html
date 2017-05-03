@@ -22,7 +22,7 @@ body {font-family: "Lato", sans-serif}
     <a href="transaction.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">TRANSACTIONS</a>
     <a href="inventory.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">INVENTORY</a>
     	<div class="w3-dropdown-hover w3-hide-small">
-     		 <button class="w3-padding-large w3-button" title="More">REPORT <i class="fa fa-caret-down"></i></button>     
+     		 <button class="w3-padding-large w3-button" title="More">REPORT <i class="fa fa-caret-down"></i></button>
       		<div class="w3-dropdown-content w3-bar-block w3-card-4">
 		        <a href="sales.html" class="w3-bar-item w3-button">Sales</a>
 		        <a href="customer.html" class="w3-bar-item w3-button">Customers</a>
@@ -30,7 +30,7 @@ body {font-family: "Lato", sans-serif}
       		</div>
     	</div>
   	</div>
-</div>	
+</div>
 
 	<!-- The Contact Section -->
 	  <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="tour">
@@ -46,27 +46,27 @@ body {font-family: "Lato", sans-serif}
 
 	          <div class="w3-row-padding" style="margin:0 -16px 8px -16px">
 	            <div class="w3-justify">
-	              <input class="w3-input w3-border" type="text" placeholder="Order Number" required name="Order Number">
+	              <input class="w3-input w3-border" type="text" placeholder="Order Number" required name="Order Number" id="order_no" name="order_no">
 	            </div>
 
 	            <div class="w3-justify">
-	              <input class="w3-input w3-border" type="text" placeholder="Agent Name" required name="Agent Name">
+	              <input class="w3-input w3-border" type="text" placeholder="Agent Name" required name="Agent Name" id="agent_name" name="agent_name">
 	            </div>
 
 	            <div class="w3-justify">
-	              <input class="w3-input w3-border" type="text" placeholder="Customer Name" required name="Customer Name">
+	              <input class="w3-input w3-border" type="text" placeholder="Customer Name" required name="Customer Name" id="customer_name" name="customer_name">
 	            </div>
 
 	            <div class="w3-justify">
-	              <input class="w3-input w3-border" type="month">
+	              <input class="w3-input w3-border" type="month" id="month" name="month">
 	            </div>
 
 	            <div class="w3-justify date">
-	              <input class="dateInput w3-border" type="date">
-	              <input class="dateInput w3-border" type="date">
+	              <input class="dateInput w3-border" type="date" id="start_date" name="start_date">
+	              <input class="dateInput w3-border" type="date" id="end_date" name="end_date">
 	            </div>
 
-	          <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message">
+	          <input class="w3-input w3-border" type="text" placeholder="Message" required name="Message" id="message" name="message">
 	          <button class="w3-button w3-black w3-section w3-right" type="submit">SEND</button>
 	        </form>
 	      </div>

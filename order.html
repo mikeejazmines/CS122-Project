@@ -16,7 +16,7 @@
     <a href="transaction.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">TRANSACTIONS</a>
     <a href="inventory.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">INVENTORY</a>
     	<div class="w3-dropdown-hover w3-hide-small">
-     		 <button class="w3-padding-large w3-button" title="More">REPORT <i class="fa fa-caret-down"></i></button>     
+     		 <button class="w3-padding-large w3-button" title="More">REPORT <i class="fa fa-caret-down"></i></button>
       		<div class="w3-dropdown-content w3-bar-block w3-card-4">
 		        <a href="sales.html" class="w3-bar-item w3-button">Sales</a>
 		        <a href="customer.html" class="w3-bar-item w3-button">Customers</a>
@@ -31,13 +31,13 @@
 	<form>
 		<div>
 			<h2>Customer Name</h2>
-			<input class="o-input w3-border" style="width:49%" type="text" placeholder="First Name">
-			<input class="o-input w3-border" style="width:49%" placeholder="Last Name">
+			<input class="o-input w3-border" style="width:49%" type="text" placeholder="First Name" id="first_name" name="first_name">
+			<input class="o-input w3-border" style="width:49%" placeholder="Last Name" id="last_name" name="last_name">
 		</div>
 
 		<div>
 			<h2>Schedule</h2>
-			<input class="w3-input w3-border" type="datetime-local">
+			<input class="w3-input w3-border" type="datetime-local" id="sched" name="sched">
 		</div>
 
 		<div>
@@ -45,25 +45,26 @@
 			Yes <input type="radio" name="gift">
 			No <input type="radio" name="gift" checked>
 		</div>
+
 		<div>
 			<h2>Recipient(s)</h2>
-			<input class="w3-input w3-border" type="text" placeholder="Recipient 1 <comma> Recipient 2 ...">
+			<input class="w3-input w3-border" type="text" placeholder="Recipient 1 <comma> Recipient 2 ..." id="recipient" name="recipient">
 		</div>
 
 		<div>
 			<h2>Delivery Address</h2>
-			<input type="text">
+			<input type="text" id="address" name="address">
 		</div>
 
 		<div>
 			<div>
 				<h2>Item Name</h2>
-				<input type="text">
+				<input type="text" id="item_name" name="item_name">
 			</div>
-			
+
 			<div>
 				<h2> Category</h2>
-				<input type="text">
+				<input type="text" id="category" name="category">
 			</div>
 		</div>
 
@@ -71,7 +72,7 @@
 
 		<h2>Amount Due:</h2>
 
-	    <button class="w3-button w3-black w3-section w3-right" type="submit">SEND</button>
+	  <button class="w3-button w3-black w3-section w3-right" type="submit">SEND</button>
 		<button class="w3-button w3-black w3-section w3-right" type="reset">RESET</button>
 	</form>
 </div>
