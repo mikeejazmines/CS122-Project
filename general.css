@@ -1,6 +1,12 @@
-.o-input{padding:8px; display:inline; border:none;border-bottom:1px solid #ccc;width:100%;}
+.o-input{padding:8px; border:1px solid #ccc;}
 
 .on{display:;}
 .off{display:none;}
 
 .selected{color:black; background-color: teal;}
+
+.o-item{display: inline-block;}
+.o-catalog{border:1px solid #000; margin-top:1em; padding:1em;}
+.o-catalog-inputs{margin-top:0px;}
+.o-amount{display:inline-block;}
+.radio{margin-left:5px;}
