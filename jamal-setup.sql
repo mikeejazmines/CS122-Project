@@ -1,92 +1,102 @@
 CREATE DATABASE jamaldb;
-USE jamalbd;
+USE jamaldb;
 
 CREATE TABLE item (
-  item_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-  item_name VARCHAR(255),
-  item_type VARCHAR(255),
-  srp INT,
-  color VARCHAR(255)
+  item_id         INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
+  item_name       VARCHAR(255) NOT NULL,
+  srp             INT NOT NULL,
+  color           VARCHAR(255) NOT NULL,
+
+  CHECK(item_type in ('f', 'po', 'p'))
+);
+
+CREATE TABLE customer (
+  customer_id     INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
+  customer_name   VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE sales_agent (
+  agent_id        INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
+  agent_name      VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE order_form (
+  order_no        INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
+  customer_id     INT NOT NULL,
+  agent_id        INT NOT NULL,
+  total_amount    INT NOT NULL,
+  date_ordered    DATE NOT NULL,
+  delivery_date   DATE NOT NULL,
+  delivery_time   TIME NOT NULL,
+  address_number  INT NOT NULL,
+  address_street  VARCHAR(255) NOT NULL,
+  address_city    VARCHAR(255) NOT NULL,
+  is_gift         BOOLEAN NOT NULL,
+
+  FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
+  FOREIGN KEY(agent_id) REFERENCES sales_agent(agent_id)
 );
 
 CREATE TABLE order_item (
-  order_no INT NOT NULL,
-  item_id INT NOT NULL,
-  quantity INT NOT NULL,
-  discount INT NOT NULL,
-  total_amount INT NOT NULL,
-  FOREIGN KEY(order_no) REFERENCES order(order_no)
+  order_no        INT NOT NULL,
+  item_id         INT NOT NULL,
+  quantity        INT NOT NULL,
+  discount        INT NOT NULL,
+  total_amount    INT NOT NULL,
+
+  FOREIGN KEY(order_no) REFERENCES order_form(order_no),
   FOREIGN KEY(item_id) REFERENCES item(item_id)
 );
 
-CREATE TABLE order (
-  order_no INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-  customer_id INT NOT NULL,
-  agent_id INT NOT NULL,
-  total_amount INT NOT NULL,
-  date_ordered DATE NOT NULL,
-  delivery_date DATE NOT NULL,
-  delivery_time TIME NOT NULL,
-  address_number INT NOT NULL,
-  address_street VARCHAR(255),
-  address_city VARCHAR(255),
-  is_gift BOOLEAN,
-  FOREIGN KEY(customer_id) REFERENCES customer(customer_id),
-  FOREIGN KEY(agent_id) REFERENCES agent(agent_id)
-);
-
 CREATE TABLE folder (
-  f_item_id INT NOT NULL,
-  f_length INT NOT NULL,
-  f_width INT NOT NULL,
-  f_height INT NOT NULL,
+  f_item_id       INT NOT NULL,
+  f_length        INT NOT NULL,
+  f_width         INT NOT NULL,
+  f_height        INT NOT NULL,
+
   FOREIGN KEY(f_item_id) REFERENCES item(item_id)
 );
 
 CREATE TABLE pen_organizers (
-  po_item_id INT NOT NULL,
-  slots INT NOT NULL
+  po_item_id      INT NOT NULL,
+  slots           INT NOT NULL,
+
   FOREIGN KEY(po_item_id) REFERENCES item(item_id)
 );
 
 CREATE TABLE planners (
-  p_item_id INT NOT NULL,
-  p_length INT NOT NULL,
-  p_width INT NOT NULL,
-  p_height INT NOT NULL,
+  p_item_id       INT NOT NULL,
+  p_length        INT NOT NULL,
+  p_width         INT NOT NULL,
+  p_height        INT NOT NULL,
+
   FOREIGN KEY(p_item_id) REFERENCES item(item_id)
 );
 
-CREATE TABLE customer (
-  cutomer_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-  cutomer_name VARCHAR(255)
-);
-
-CREATE TABLE sales_agent (
-  agent_id INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-  agent_name VARCHAR(255)
-);
-
 CREATE TABLE recipient (
-  recipient_name VARCHAR(255) PRIMARY KEY,
-  order_no INT NOT NULL,
-  FOREIGN KEY(order_no) REFERENCES order(order_no)
+  recipient_name  VARCHAR(255) NOT NULL PRIMARY KEY,
+  order_no        INT NOT NULL,
+
+  FOREIGN KEY(order_no) REFERENCES order_form(order_no)
 );
 
 CREATE TABLE feature (
-  item_id INT NOT NULL,
-  feature VARCHAR(255) NOT NULL,
+  item_id         INT NOT NULL,
+  feature         VARCHAR(255) NOT NULL,
+
   FOREIGN KEY(item_id) REFERENCES item(item_id)
 );
 
 CREATE TABLE stock (
-  item_id INT NOT NULL,
-  quantity INT NOT NULL,
+  item_id         INT NOT NULL,
+  quantity        INT NOT NULL,
+
   FOREIGN KEY(item_id) REFERENCES item(item_id)
 );
 
 CREATE TABLE personalization (
-  item_id INT NOT NULL,
+  item_id         INT NOT NULL,
   personalization VARCHAR(255),
+
   FOREIGN KEY(item_id) REFERENCES item(item_id)
 );
