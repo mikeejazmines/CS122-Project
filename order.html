@@ -30,97 +30,112 @@
 </div>
 
 <div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="tour">
-	<h1 class="w3-wide w3-center">Order Form</h1>
+	<h1 class="w3-wide w3-center">ORDER FORM</h1>
 	<form>
-		<div>
-			<h2>Customer Name</h2>
-			<input class="o-input w3-border" style="width:49%; margin-right:1.5%" type="text" placeholder="First Name" name ="first_name">
-			<input class="o-input w3-border" style="width:49%" placeholder="Last Name" name="last_name">
-		</div>
+		<div style="overflow:auto">
+			<div class="o-catalog" style="overflow:auto">
+				<div>
+					<h2 class="o-catalog-inputs">Item Catalog</h2>
+					<div class="o-item" style="margin-right:0.5em">
+						<input class="o-input" type="text" name="item_name" placeholder="Item Name">
+					</div>
 
-		<div>
-			<h2>Schedule</h2>
-			<input class="w3-input w3-border" type="datetime-local" name="sched">
-		</div>
-
-		<div>
-			<h2>Gift</h2>
-			Yes <input class="radio" type="radio" name="gift" name="gift_y">
-			No <input class="radio" type="radio" name="gift" checked name="gift_n">
-		</div>
-		<div>
-			<h2>Recipient(s)</h2>
-			<input class="w3-input w3-border" type="text" placeholder="Recipient 1 <comma> Recipient 2 ..." name="recipients">
-		</div>
-
-		<div>
-			<h2>Delivery Address</h2>
-			<input class="w3-input w3-border" type="text" name="address">
-		</div>
-
-		<div class="o-catalog">
-			<div>
-				<div class="o-item" style="margin-right:0.5em">
-					<h2 class="o-catalog-inputs">Item Name</h2>
-					<input class="o-input" type="text" name="item_name">
+					<div class="o-item">
+						<input class="o-input" type="text" name="category" placeholder="Category">
+					</div>
 				</div>
 
-				<div class="o-item">
-					<h2 class="o-catalog-inputs">Category</h2>
-					<input class="o-input" type="text" name="category">
-				</div>
+				<table class="w3-table-all" style="margin-top:0.83em">
+					<tr>
+						<th>Item</th>
+						<th>Features</th>
+						<th>Dimensions</th>
+						<th>Personalization</th>
+						<th>Price</th>
+					</tr>
+
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+
+					<button id="addToCart" class="w3-button w3-black w3-section w3-right" type="submit">ADD TO CART</button>
 			</div>
 
-			<table class="w3-table-all" style="margin-top:0.83em">
-				<tr>
-					<th>Item</th>
-					<th>Features</th>
-					<th>Dimensions</th>
-					<th>Personalization</th>
-					<th>Price</th>
-				</tr>
+			<div class="o-catalog">
+				<h2 class="o-catalog-inputs">Cart</h2>
 
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
+				<table class="w3-table-all" style="margin-top:0.83em">
+					<tr>
+						<th>Item</th>
+						<th>Features</th>
+						<th>Dimensions</th>
+						<th>Personalization</th>
+						<th>Price</th>
+					</tr>
+
+					<tr>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</table>
+			</div>
+
+			<div>
+				<h2 class="o-amount">Amount Due:</h2>
+				<input class="o-amount o-input" type="text" readonly name="amount">
+			</div>
+
+		    <a href="#details" id="proceed" class="w3-button w3-black w3-section w3-right">PROCEED</a>
+			<button class="w3-button w3-black w3-section w3-right" type="reset" style="margin-right:0.5em">CANCEL</button>
 		</div>
+	</form>
 
-		<div class="o-catalog">
-			<h2 class="o-catalog-inputs">Cart</h2>
+	<form>
+		<div id="details" style="display:none">
+			<div>
+				<h2>Customer Name</h2>
+				<input class="o-input w3-border o-names" type="text" placeholder="First Name" name ="first_name" required>
+				<input class="o-input w3-border o-lastnames" placeholder="Last Name" name="last_name" required>
+			</div>
 
-			<table class="w3-table-all" style="margin-top:0.83em">
-				<tr>
-					<th>Item</th>
-					<th>Features</th>
-					<th>Dimensions</th>
-					<th>Personalization</th>
-					<th>Price</th>
-				</tr>
+			<div>
+				<h2>Schedule</h2>
+				<input class="w3-input w3-border" type="datetime-local" name="sched" required>
+			</div>
 
-				<tr>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-					<td></td>
-				</tr>
-			</table>
+			<div>
+				<h2>Gift</h2>
+				Yes <input class="radio" type="radio" name="gift" name="gift_y">
+				No <input class="radio" type="radio" name="gift" checked name="gift_n">
+			</div>
+			<div>
+				<h2>Recipient(s)</h2>
+				<input class="w3-input w3-border" type="text" placeholder="Recipient 1 <comma> Recipient 2 ..." name="recipients" required>
+			</div>
+
+			<div>
+				<h2>Delivery Address</h2>
+				<input class="w3-input w3-border" type="text" name="address" required>
+			</div>
+
+			<button class="w3-button w3-black w3-section w3-right" type="submit" style="margin-right:0.5em">SUBMIT</button>
 		</div>
-
-		<div>
-			<h2 class="o-amount">Amount Due:</h2>
-			<input class="o-amount o-input" type="text" readonly name="amount">
-		</div>
-
-	    <button class="w3-button w3-black w3-section w3-right" type="submit">SEND</button>
-		<button class="w3-button w3-black w3-section w3-right" type="reset" style="margin-right:0.5em">RESET</button>
 	</form>
 </div>
+
+<script>
+	document.getElementById("proceed").onclick = function() {
+		document.getElementById("details").style.display = "initial";
+	};
+</script>
 </body>
 
 </html>
