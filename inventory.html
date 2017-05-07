@@ -32,12 +32,7 @@
 
 	<div class="w3-container w3-content w3-padding-64" style="max-width:800px" id="tour">
 		<h1 class="w3-wide w3-center">INVENTORY</h1>
-		<form>
-			<h2>As of:</h2>
-			<input class="w3-input w3-border" type="date" name="date">
-
-		    <button class="w3-button w3-black w3-section w3-right" type="submit">SEND</button>
-		</form>
+		<h2 id="date"></h2>
 
 		<table class="w3-table-all">
 			<tr>
@@ -65,5 +60,11 @@
 			</tr>
 		</table>
 	</div>
+
+	<script>
+		var d = new Date();
+		var message = "As of " + d.toDateString().slice(4);
+		document.getElementById("date").innerHTML = message;
+	</script>
 </body>
 </html>
