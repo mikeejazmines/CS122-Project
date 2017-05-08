@@ -114,4 +114,24 @@
 
     return $num_cusomter->fetchAll(PDO::FETCH_ASSOC);
   }
+
+  function decrease($quantity, $item_id) {
+    include("db_connection.php");
+
+    $query = ("UPDATE stock
+               SET quantity = quantity - " . $quantity . "
+               WHERE item_id = " . $item_id);
+
+    $decrease = $db->query($query);
+  }
+
+  function increase($quantity, $item_id) {
+    include("db_connection.php");
+
+    $query = ("UPDATE stock
+               SET quantity = quantity + " . $quantity . "
+               WHERE item_id = " . $item_id);
+
+    $decrease = $db->query($query);
+  }
 ?>
