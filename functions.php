@@ -16,9 +16,9 @@
   }
 
   function test() {
-    include("db_connection.php");
+    include("testdb.php");
 
-    $inventory = $db->query("SELECT * FROM customer WHERE customer_id = 30");
+    $inventory = $db->query("SELECT * FROM inventory");
 
     return $inventory->fetchAll(PDO::FETCH_ASSOC);
   }
@@ -35,14 +35,13 @@
     return $inventory->fetchAll(PDO::FETCH_ASSOC);
   }
 
-  /*WHERE date_ordered = '" . $date . "'
-    $date*/
-  function sales() {
+  function sales($date) {
     include("db_connection.php");
 
     $query = ("SELECT item_name, SUM(quantity) AS 'units_sold', SUM(order_item.total_amount) AS 'earnings' FROM item
                JOIN order_item ON item.item_id = order_item.item_id
                JOIN order_form ON order_item.order_no = order_form.order_no
+               WHERE date_ordered = '" . $date . "'
                GROUP BY item_name");
 
     $sales = $db->query($query);
@@ -113,25 +112,5 @@
     $num_cusomter = $db->query($query);
 
     return $num_cusomter->fetchAll(PDO::FETCH_ASSOC);
-  }
-
-  function decrease($quantity, $item_id) {
-    include("db_connection.php");
-
-    $query = ("UPDATE stock
-               SET quantity = quantity - " . $quantity . "
-               WHERE item_id = " . $item_id);
-
-    $decrease = $db->query($query);
-  }
-
-  function increase($quantity, $item_id) {
-    include("db_connection.php");
-
-    $query = ("UPDATE stock
-               SET quantity = quantity + " . $quantity . "
-               WHERE item_id = " . $item_id);
-
-    $decrease = $db->query($query);
   }
 ?>
