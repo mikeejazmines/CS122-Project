@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html>
-<title> Jamal Website </title>
 <meta charset="UTF-8"> <!-- UTF-8 (U from Universal Character Set + Transformation Format—8-bit) is a character encoding capable of encoding all possible characters (called code points) in Unicode. The encoding is variable-length and uses 8-bit code units.-->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="stylesheet1.css">
@@ -22,16 +21,17 @@
     <a href="transaction.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">TRANSACTIONS</a>
     <a href="inventory.html" class="w3-bar-item w3-button w3-padding-large w3-hide-small">INVENTORY</a>
     	<div class="w3-dropdown-hover w3-hide-small">
-     		 <button class="w3-padding-large w3-button" title="More">REPORT <i class="fa fa-caret-down"></i></button>     
+     		 <button class="w3-padding-large w3-button" title="More">REPORT <i class="fa fa-caret-down"></i></button>
       		<div class="w3-dropdown-content w3-bar-block w3-card-4">
 		        <a href="sales.html" class="w3-bar-item w3-button">Sales</a>
 		        <a href="customer.html" class="w3-bar-item w3-button">Customers</a>
 		        <a href="agent.html" class="w3-bar-item w3-button">Agent</a>
       		</div>
     	</div>
+    	<a href ="login.html" class="w3-padding-large w3-button w3-right">LOG OUT</a>
   	</div>
-</div>	
-	
+</div>
+
 	  <div class="w3-container w3-content w3-padding-64" style="max-width:800px">
 		<h1 class="w3-wide w3-center">AGENT TRANSACTIONS</h1>
 	   	<div>
@@ -39,15 +39,15 @@
         <div id="filterForm" style="display:none">
         	<form class="o-catalog" style="margin-top:0px">
 	        	<h2>Order Number</h2>
-	            <input class="w3-input w3-border" type="text" placeholder="Order Number" required name="Order Number">
+	            <input class="w3-input w3-border" type="text" placeholder="Order Number" name="Order Number" required>
 
 	            <h2>Agent Name </h2>
-	    		<input class="o-input w3-border o-names" type="text" placeholder="First Name">  
-				<input class="o-input w3-border o-lastnames" type="text" placeholder="Last Name">
+	    		<input class="o-input w3-border o-names" type="text" placeholder="First Name" name="firstAgent" required>
+				<input class="o-input w3-border o-lastnames" type="text" placeholder="Last Name" name = "lastAgent" required>
 
 	       		<h2>Customer Name</h2>
-				<input class="o-input w3-border o-names" type="text" placeholder="First Name">  
-				<input class="o-input w3-border o-lastnames" type="text" placeholder="Last Name">
+				<input class="o-input w3-border o-names" type="text" placeholder="First Name" name =" firstCustomer" required>
+				<input class="o-input w3-border o-lastnames" type="text" placeholder="Last Name" name ="lastCustomer" required>
 
 				<h2 style="margin-bottom:0px; padding:0px">Time Period</h2>
 
@@ -90,10 +90,10 @@
 				<td></td>
 				<td></td>
 			</tr>
-		</table>  
+		</table>
 	      </div>
 	    </div>
-		
+
 	<script src="report.js"></script>
 	<script>
 		document.getElementById("filters").onclick = function(){

@@ -26,6 +26,7 @@
 		        <a href="agent.html" class="w3-bar-item w3-button">Agent</a>
       		</div>
     	</div>
+    	<a href ="login.html" class="w3-padding-large w3-button w3-right">LOG OUT</a>
   	</div>
 </div>
 
@@ -33,15 +34,16 @@
 	<h1 class="w3-wide w3-center">ORDER FORM</h1>
 	<form>
 		<div style="overflow:auto">
-			<div class="o-catalog" style="overflow:auto">
+			<div class="o-catalog">
 				<div>
 					<h2 class="o-catalog-inputs">Item Catalog</h2>
 					<div class="o-item" style="margin-right:0.5em">
-						<input class="o-input" type="text" name="item_name" placeholder="Item Name">
+						<input class="o-input" type="text" name="item_name" placeholder="Item Name" name ="itemname" required >
+
 					</div>
 
 					<div class="o-item">
-						<input class="o-input" type="text" name="category" placeholder="Category">
+						<input class="o-input" type="text" name="category" placeholder="Category" name="category" required>
 					</div>
 				</div>
 
@@ -62,8 +64,17 @@
 						<td></td>
 					</tr>
 				</table>
+					
+					<div class="o-item">
+					<input type = "text" class= " o-catalog-inputs w3-section w3-left o-input" name= "discountCode" placeholder ="discount code">
+					</div>
 
-					<button id="addToCart" class="w3-button w3-black w3-section w3-right" type="submit">ADD TO CART</button>
+					<div class="o-item">
+					<input type = "text" class=  "o-catalog-inputs w3-section w3-left o-input" name= "quantity" placeholder ="quantity" required name= "quantity">
+					</div>
+
+					<button  id="addToCart" class="w3-button w3-black w3-section w3-right" type="submit">ADD TO CART</button>
+						
 			</div>
 
 			<div class="o-catalog">
@@ -102,8 +113,8 @@
 		<div id="details" style="display:none">
 			<div>
 				<h2>Customer Name</h2>
-				<input class="o-input w3-border o-names" type="text" placeholder="First Name" name ="first_name" required>
-				<input class="o-input w3-border o-lastnames" placeholder="Last Name" name="last_name" required>
+				<input class="o-input w3-border o-names" type="text" placeholder="First Name" name ="firstCustomer" required>
+				<input class="o-input w3-border o-lastnames" placeholder="Last Name" name="lastCustomer" required>
 			</div>
 
 			<div>
@@ -123,7 +134,7 @@
 
 			<div>
 				<h2>Delivery Address</h2>
-				<input class="w3-input w3-border" type="text" name="address" required>
+				<input class="w3-input w3-border" type="text" name="address" required placeholder = "House number, Street Name, Village Name, City, Province/State, Country">
 			</div>
 
 			<button class="w3-button w3-black w3-section w3-right" type="submit" style="margin-right:0.5em">SUBMIT</button>

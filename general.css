@@ -6,7 +6,7 @@
 .selected{color:black; background-color: teal;}
 
 .o-item{display: inline-block;}
-.o-catalog{border:1px solid #000; margin-top:1em; padding:1em; position:relative;}
+.o-catalog{border:1px solid #000; margin-top:1em; padding:1em; overflow:auto;}
 .o-catalog-inputs{margin-top:0px;}
 .o-amount{display:inline-block;}
 .radio{margin-left:5px;}
