@@ -4,20 +4,23 @@ USE jamaldb;
 CREATE TABLE item (
   item_id         INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
   item_name       VARCHAR(255) NOT NULL,
-  srp             INT NOT NULL,
+  item_type       VARCHAR(255) NOT NULL,
   color           VARCHAR(255) NOT NULL,
+  srp             INT NOT NULL,
 
   CHECK(item_type in ('f', 'po', 'p'))
 );
 
 CREATE TABLE customer (
   customer_id     INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-  customer_name   VARCHAR(255) NOT NULL
+  first_name   	  VARCHAR(255) NOT NULL,
+  last_name		    VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE sales_agent (
   agent_id        INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
-  agent_name      VARCHAR(255) NOT NULL
+  first_name   	  VARCHAR(255) NOT NULL,
+  last_name		    VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE order_form (
@@ -28,7 +31,7 @@ CREATE TABLE order_form (
   date_ordered    DATE NOT NULL,
   delivery_date   DATE NOT NULL,
   delivery_time   TIME NOT NULL,
-  address_number  INT NOT NULL,
+  address_number  VARCHAR(255) NOT NULL,
   address_street  VARCHAR(255) NOT NULL,
   address_city    VARCHAR(255) NOT NULL,
   is_gift         BOOLEAN NOT NULL,
@@ -43,6 +46,7 @@ CREATE TABLE order_item (
   quantity        INT NOT NULL,
   discount        INT NOT NULL,
   total_amount    INT NOT NULL,
+  personalization VARCHAR(255),
 
   FOREIGN KEY(order_no) REFERENCES order_form(order_no),
   FOREIGN KEY(item_id) REFERENCES item(item_id)
@@ -50,9 +54,9 @@ CREATE TABLE order_item (
 
 CREATE TABLE folder (
   f_item_id       INT NOT NULL,
-  f_length        INT NOT NULL,
-  f_width         INT NOT NULL,
-  f_height        INT NOT NULL,
+  f_length        VARCHAR(255) NOT NULL,
+  f_width         VARCHAR(255) NOT NULL,
+  f_height        VARCHAR(255) NOT NULL,
 
   FOREIGN KEY(f_item_id) REFERENCES item(item_id)
 );
@@ -66,9 +70,9 @@ CREATE TABLE pen_organizers (
 
 CREATE TABLE planners (
   p_item_id       INT NOT NULL,
-  p_length        INT NOT NULL,
-  p_width         INT NOT NULL,
-  p_height        INT NOT NULL,
+  p_length        VARCHAR(255) NOT NULL,
+  p_width         VARCHAR(255) NOT NULL,
+  p_height        VARCHAR(255) NOT NULL,
 
   FOREIGN KEY(p_item_id) REFERENCES item(item_id)
 );
@@ -96,7 +100,7 @@ CREATE TABLE stock (
 
 CREATE TABLE personalization (
   item_id         INT NOT NULL,
-  personalization VARCHAR(255),
+  personalization INT NOT NULL,
 
   FOREIGN KEY(item_id) REFERENCES item(item_id)
 );
