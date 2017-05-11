@@ -1,0 +1,42 @@
+TABLE item
+item_name {flipper, filer, keeper, slinger, shifter, wrapper, doodler, scribbler}
+srp{745, 995, 895, 95, 295, 345, 595, 595}
+color{red, orange, yellow, green, blue, purple, pink, black} //can random per item_id
+
+TABLE customer & sales_agent
+kaw na bahala sa first and last names
+
+TABLE order_form
+can randomize everything here just make sure the total_amount will be correct when you compare it to order_item
+
+TABLE order_item
+random na rin
+
+TABLE folder
+f_length{13.5, 14, 14}
+f_width{10.25, 11, 11.5}
+f_height{0.75, 1.5, 1}
+
+TABLE pen_organizers
+slots{6, 15, 4}
+
+TABLE planners
+p_length{8, 8.5}
+p_width{6, 6}
+p_height{0.75, 0.75}
+
+TABLE recipient
+random mo nalang
+
+TABLE feature
+feature{[reversible, slim and compact, leatherette material, magnetic corners, magnetic clipboard, envelope pocket, pen loop (2)],
+        [multi-function portfolio organizer, leather exterior, magnetic flap, 3-ring binder, sleeves for papers, pen loop, concealable handles],
+        [accordion style with label slots, leather exterior, waterproof interior, magnetic lock, pen loop(2), detachable shoulder strap],
+        [magnetic lock, dual ribbon straps with velcro, water repellent, no tear interior lining],
+        [triple zipper, expandable bin, velcro locked pockets, water repellent],
+        [water resistant, leather exterior, 4-way compartment, flexible format, magnetic buttons],
+        [smyth sewn hardbound, premium 120 gsm paper, monthly spread, weekly(,) daily views, non-lined(,) colorable pages, leisure list, money tracker, back pocket],
+        [smyth sewn hardbound, premium 100 gsm paper, weekly spread, monthly spread, lined notes pages, monthly watercolor artwork, leisure activities list, optional sleeve (+185 to price)]}
+
+TABLE personalization
+personalization{8, 8, 8, 5, 8, 6, 8, 8}
