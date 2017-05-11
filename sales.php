@@ -6,7 +6,7 @@
 ?>
 
 		<h1 class="w3-wide w3-center">SALES REPORT</h1>
-		<form action="sales.php">
+		<form method="post" action="sales.php">
 			<a class="w3-button w3-black w3-section" id="dayB">DAY</a>
 			<a class="w3-button w3-black w3-section" id="weekB">WEEK</a>
 			<a class="w3-button w3-black w3-section" id="monthB">MONTH</a>
@@ -37,28 +37,31 @@
 			</tr>
 
 			<?php
-				$date = "";
 				if ($_SERVER["REQUEST_METHOD"] == "POST") {
 					$date = trim(filter_input(INPUT_POST, "date", FILTER_SANITIZE_STRING));
-				}
-				$sales = sales($date);
+					$week = trim(filter_input(INPUT_POST, "week", FILTER_SANITIZE_STRING));
+		      $month = trim(filter_input(INPUT_POST, "month", FILTER_SANITIZE_STRING));
+		      $year = trim(filter_input(INPUT_POST, "year", FILTER_SANITIZE_STRING));
 
-				foreach ($sales as $item) {
-					$item_name = $item["item_name"];
-					$sold = $item["units_sold"];
-					$earnings = $item["earnings"];
+					$sales = sales($date, $week, $month, $year);
 
-					$customerCount = customerCount($item_name);
+					foreach ($sales as $item) {
+						$item_name = $item["item_name"];
+						$sold = $item["units_sold"];
+						$earnings = $item["earnings"];
 
-					$count = $customerCount[0] ["count"];
+						$customerCount = customerCount($item_name, $date, $week, $month, $year);
 
-					echo
-					"<tr>
+						$count = $customerCount[0] ["count"];
+
+						echo
+						"<tr>
 						<td>$item_name</td>
 						<td>$count</td>
 						<td>$sold</td>
 						<td>$earnings</td>
-					</tr>";
+						</tr>";
+					}
 				}
 			?>
 		</table>

@@ -6,7 +6,7 @@
 ?>
 
 		<h1 class="w3-wide w3-center">AGENT REPORT</h1>
-		<form>
+		<form method="post" action="agent.php">
 			<a class="w3-button w3-black w3-section" id="dayB">DAY</a>
 			<a class="w3-button w3-black w3-section" id="weekB">WEEK</a>
 			<a class="w3-button w3-black w3-section" id="monthB">MONTH</a>
@@ -37,26 +37,34 @@
 			</tr>
 
 			<?php
-				$agent = agent();
+				if ($_SERVER["REQUEST_METHOD"] == "POST") {
+					$date = trim(filter_input(INPUT_POST, "date", FILTER_SANITIZE_STRING));
+					$week = trim(filter_input(INPUT_POST, "week", FILTER_SANITIZE_STRING));
+					$month = trim(filter_input(INPUT_POST, "month", FILTER_SANITIZE_STRING));
+					$year = trim(filter_input(INPUT_POST, "year", FILTER_SANITIZE_STRING));
 
-				foreach ($agent as $employee) {
-					$agent_name = $employee["agent_name"];
+					$agent = agent($date, $week, $month, $year);
 
-					$num_customer = num_customer($agent_name);
+					foreach ($agent as $employee) {
+						$agent_name = $employee["agent_name"];
 
-					$customer_count = $num_customer[0] ["customer_count"];
-					$orders = $num_customer[0] ["orders"];
-					$earnings = $num_customer[0] ["earnings"];
+						$num_customer = num_customer($agent_name, $date, $week, $month, $year);
 
-					echo
-					"<tr>
+						$customer_count = $num_customer[0] ["customer_count"];
+						$orders = $num_customer[0] ["orders"];
+						$earnings = $num_customer[0] ["earnings"];
+
+						echo
+						"<tr>
 						<td>$agent_name</td>
 						<td>$customer_count</td>
 						<td>$orders</td>
 						<td>$earnings</td>
-					</tr>
-					";
+						</tr>
+						";
+					}
 				}
+
 			?>
 
 		</table>

@@ -6,7 +6,7 @@
 ?>
 
 		<h1 class="w3-wide w3-center">CUSTOMER REPORT</h1>
-		<form>
+		<form method="post" action="customer.php">
 			<a class="w3-button w3-black w3-section" id="dayB">DAY</a>
 			<a class="w3-button w3-black w3-section" id="weekB">WEEK</a>
 			<a class="w3-button w3-black w3-section" id="monthB">MONTH</a>
@@ -37,25 +37,32 @@
 			</tr>
 
 			<?php
-				$customer = customer();
+				if ($_SERVER["REQUEST_METHOD"] == "POST") {
+					$date = trim(filter_input(INPUT_POST, "date", FILTER_SANITIZE_STRING));
+					$week = trim(filter_input(INPUT_POST, "week", FILTER_SANITIZE_STRING));
+					$month = trim(filter_input(INPUT_POST, "month", FILTER_SANITIZE_STRING));
+					$year = trim(filter_input(INPUT_POST, "year", FILTER_SANITIZE_STRING));
 
-				foreach ($customer as $client) {
-					$customer_name = $client["customer_name"];
-					$agent_name = $client["agent_name"];
+					$customer = customer($date, $week, $month, $year);
 
-					$orders = orders($customer_name);
+					foreach ($customer as $client) {
+						$customer_name = $client["customer_name"];
+						$agent_name = $client["agent_name"];
 
-					$orders_made = $orders[0] ["orders_made"];
-					$total_amount = $orders[0] ["total_amount"];
+						$orders = orders($customer_name, $date, $week, $month, $year);
 
-					echo
-					"<tr>
+						$orders_made = $orders[0] ["orders_made"];
+						$total_amount = $orders[0] ["total_amount"];
+
+						echo
+						"<tr>
 						<td>$customer_name</td>
 						<td>$agent_name</td>
 						<td>$orders_made</td>
 						<td>$total_amount</td>
-					</tr>
-					";
+						</tr>
+						";
+					}
 				}
 			?>
 		</table>
