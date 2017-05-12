@@ -41,13 +41,9 @@
 			$S = getInput("S");
 			$C = getInput("C");
 			
-			submitOrder($firstCustomer, $lastCustomer, $sched, $gift, $recipients, $HN, $S, $C);
-		}
-		else if($_POST['button'] == "log out") {
-			//Logs agent out of his/her account
-			
-			$_SESSION['cart'] = array();
-			header("location: login.php");
+			if(count($_SESSION['cart']) == 0) $_POST['button'] = "false submit"; //triggers warning message
+			else if(explode("T", $sched)[0] <= date("Y-m-d")) $_POST['button'] = "too late"; //triggers warning message
+			else submitOrder($firstCustomer, $lastCustomer, $sched, $gift, $recipients, $HN, $S, $C);
 		}
 		else if(substr($_POST['button'], 0, 1) == 'C') { //C for choose
 			//Reduces the contents of the catalog to the item with item_id equal to $id
@@ -113,14 +109,20 @@
 							$_SESSION['catalog'] = getItemCatalog($item_name, $category);
 							
 							if(($item_name == "") && ($category == "null")) {
-								echo "<p class=\"w3-red\">Please input an Item Name and/or Category.</p>";
+								echo "<p class='w3-red w3-center'>Please input an Item Name and/or Category.</p>";
 							}
 							else if(count($_SESSION['catalog']) == 0) {
-								echo "<p>No item matched the details that you indicated.</p>";
+								echo "<p class='w3-gray w3-center'>No item matched the details that you indicated.</p>";
 							}
 						}
 						else if($_POST['button'] == "submit") {
-							echo "<p>Your order has been placed.</p>";
+							echo "<p class='w3-gray w3-center'>Your order has been placed.</p>";
+						}
+						else if($_POST['button'] == "false submit") {
+							echo "<p class='w3-red w3-center'>Your cannot place an order with no items.</p>";
+						}
+						else if($_POST['button'] == "too late") {
+							echo "<p class='w3-red w3-center'>Please specify a date no earlier than tomorrow.</p>";
 						}
 					}
 				?>
@@ -148,8 +150,8 @@
 							echo "<td>" . ucwords($item["item_name"]) . "</td>";
 							echo "<td>" . implode("</br>", $item["features"]) . "</td>";
 							echo "<td>" . implode("</br>", $item["dimensions_or_slots"]) . "</td>";
-							echo "<td>Up to " . $item["personalization"] . " letters</td>";
-							echo "<td>" . number_format($item["srp"], 2) . "</td>";
+							echo "<td>Up to " . $item["personalization_length"] . " letters</td>";
+							echo "<td>" . number_format($item["srp"]/100, 2) . "</td>";
 							echo "<td><button name=\"button\" value=\"C" . $item["item_id"] . "\">&#10003</button></td>";
 							echo "</tr>";
 						}
@@ -186,7 +188,7 @@
 								<?php
 									//Limits the number of characters of the personalization to the limit stated by the item
 								
-									echo "placeholder=\"Maximum of " . $_SESSION["catalog"][0]["personalization"] . " letter/s\" maxLength = " . $_SESSION["catalog"][0]["personalization"];
+									echo "placeholder=\"Maximum of " . $_SESSION["catalog"][0]["personalization_length"] . " letter/s\" maxLength = " . $_SESSION["catalog"][0]["personalization_length"];
 								?>
 							>
 							<h2>Discount</h2>
@@ -222,9 +224,9 @@
 							echo "<td>" . ucwords($log["item_name"]) . "</td>";
 							echo "<td>Color: " . $log["color"] . "</br>Personalization: " . $log["personalization"] . "</td>";
 							echo "<td>" . number_format($log["qty"]) . "</td>";
-							echo "<td>" . number_format($log["srp"], 2) . "</td>";
-							echo "<td>" . $log["discount"] . "</td>";
-							echo "<td>" . number_format($log["total"], 2) . "</td>";
+							echo "<td>" . number_format($log["srp"]/100, 2) . "</td>";
+							echo "<td>" . $log["discount"] . "%</td>";
+							echo "<td>" . number_format($log["total"]/100, 2) . "</td>";
 							echo "<td><button name=\"button\" value=\"R" . $key . "\">&#10006</button></td>";
 							echo "</tr>";
 						}
@@ -235,7 +237,7 @@
 			<div>
 				<h2 class="o-amount">Amount Due:</h2>
 				<input class="o-amount o-input" type="text" readonly name="amount" value="<?php
-						echo number_format(getTotalAmount(), 2);
+						echo number_format(getTotalAmount()/100, 2);
 					?>">
 			</div>
 

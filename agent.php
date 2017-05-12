@@ -12,7 +12,7 @@
 ?>
 
 		<h1 class="w3-wide w3-center">AGENT REPORT</h1>
-		<form method="post" action="agent.php">
+		<form method="post" action="agent.php" style="overflow:auto">
 			<a class="w3-button w3-black w3-section" id="dayB">DAY</a>
 			<a class="w3-button w3-black w3-section" id="weekB">WEEK</a>
 			<a class="w3-button w3-black w3-section" id="monthB">MONTH</a>
@@ -54,20 +54,28 @@
 					$month = getInput("month");
 					$year = getInput("year");
 					$agent = agent($date, $week, $month, $year);
-					foreach ($agent as $employee) {
-						$agent_name = $employee["agent_name"];
-						$num_customer = numCustomer($agent_name, $date, $week, $month, $year);
-						$customer_count = $num_customer[0] ["customer_count"];
-						$orders = $num_customer[0] ["orders"];
-						$earnings = $num_customer[0] ["earnings"];
-						echo
-						"<tr>
-						<td>$agent_name</td>
-						<td>$customer_count</td>
-						<td>$orders</td>
-						<td>$earnings</td>
-						</tr>
-						";
+					
+					if($agent === null)
+						echo "<p class='w3-red w3-center'>Please input a date filter.</p>";
+					else {
+						if(count($agent) == 0)
+							echo "<p class='w3-gray w3-center'>No sales were made in the inputted time.</p>";
+						
+						foreach ($agent as $employee) {
+							$agent_name = $employee["agent_name"];
+							$num_customer = numCustomer($agent_name, $date, $week, $month, $year);
+							$customer_count = $num_customer[0] ["customer_count"];
+							$orders = $num_customer[0] ["orders"];
+							$earnings = $num_customer[0] ["earnings"];
+							echo
+							"<tr>
+							<td>$agent_name</td>
+							<td>" . number_format($customer_count) . "</td>
+							<td>" . number_format($orders) . "</td>
+							<td>" . number_format($earnings/100, 2) . "</td>
+							</tr>
+							";
+						}
 					}
 				}
 			?>

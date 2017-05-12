@@ -38,22 +38,22 @@ function getItemCatalog($item_name, $category) {
 	if($category == "null") $category = "";
 	if(($item_name == "") && ($category == "")) return array();
 	
-	$queryString = "SELECT DISTINCT item.item_id, item.item_name, item.srp, item.item_type, personalization.personalization FROM item, personalization";
-	$cases = "personalization.item_id = item.item_id";
+	$queryString = "SELECT item_id, item_name, srp, item_type, personalization_length FROM item";
+	$cases = array();
 	
 	if($category != "") {
 		$category = strtolower($category);
 		$fieldName = $_SESSION['prefixes'][$category] . "_item_id";
 		
 		$queryString .= ", " . $_SESSION['tableNames'][$_SESSION['prefixes'][$category]];
-		$cases .= " AND item.item_id = $fieldName";
+		$cases[] = "item.item_id = $fieldName";
 	}
 
 	if($item_name != "") {
 		$item_name = strtolower($item_name);
-		$cases .= " AND lower(item.item_name) = \"$item_name\"";
+		$cases[] = "lower(item.item_name) = \"$item_name\"";
 	}
-	$queryString .= " WHERE " . $cases;
+	$queryString .= " WHERE " . implode(" AND ", $cases);
 	
 	$catalog = $db->query($queryString)->fetchAll(PDO::FETCH_ASSOC);
 	
@@ -128,8 +128,11 @@ function getFeatures($id) {
  * 		If $dateType is equal to "month", the transaction must have been made in the month and year specified by $date.
  * 		If $dateType is equal to "week", the transaction must have been made in the week and year specified by $date.
  * 		If $dateType is equal to "day", the transaction must have been made on the exact day specified by $date.
+ * Returns null if all parameters are equal to null
  */
 function getTransactions($orderNumber, $firstAgent, $lastAgent, $firstCustomer, $lastCustomer, $dateType, $date) {
+	if(!$orderNumber AND !$firstAgent AND !$lastAgent AND !$firstCustomer AND !$lastCustomer AND !$dateType) return null;
+	
 	include("db_connection.php");
 	
 	$queryString = "SELECT order_form.date_ordered \"date\", CONCAT(sales_agent.first_name, \" \", sales_agent.last_name) \"agent name\",
@@ -236,6 +239,7 @@ function getInput($name) {
 function submitOrder($firstCustomer, $lastCustomer, $sched, $gift, $recipients, $HN, $S, $C) {
 	include("db_connection.php");
 	
+	//Creates order_form
 	$sched = explode("T", $sched);
 	
 	try{
@@ -255,6 +259,7 @@ function submitOrder($firstCustomer, $lastCustomer, $sched, $gift, $recipients, 
 	}
 	catch(Exception $e) {}
 	
+	//Creates order_item's
 	$order_number = $db->query("SELECT LAST_INSERT_ID()")->fetchAll(PDO::FETCH_ASSOC);
 	$order_number = $order_number[0]["LAST_INSERT_ID()"];
 	
@@ -273,6 +278,7 @@ function submitOrder($firstCustomer, $lastCustomer, $sched, $gift, $recipients, 
 		catch(Exception $e) {}
 	}
 	
+	//Adds recipients
 	$recipients = explode(",", $recipients);
 	foreach($recipients as $recipient) {
 		try{
@@ -285,6 +291,7 @@ function submitOrder($firstCustomer, $lastCustomer, $sched, $gift, $recipients, 
 		catch(Exception $e) {}
 	}
 	
+	//Updates the inventory
 	foreach($_SESSION['cart'] as $item) {
 		try{
 			$results = $db->prepare("UPDATE stock SET quantity = (quantity - ?) WHERE item_id = ? AND color = ?");
@@ -297,6 +304,7 @@ function submitOrder($firstCustomer, $lastCustomer, $sched, $gift, $recipients, 
 		catch(Exception $e) {}
 	}
 	
+	//Empties cart
 	$_SESSION['cart'] = array();
 }
 
@@ -336,7 +344,7 @@ function getCustomerId($firstName, $lastName) {
 function addCustomer($firstName, $lastName) {
 	include("db_connection.php");
 	
-	$db->prepare("INSERT INTO customer VALUES(NULL, '$firstName', '$lastName')")->execute();
+	$db->prepare("INSERT INTO customer VALUES(NULL, '$firstName', '$lastName', '" . $_SESSION['agent_id'] . "')")->execute();
 }
 
   /*
@@ -358,6 +366,7 @@ function addCustomer($firstName, $lastName) {
 
   /*
   * Obtains item names, sum of quantity of units sold, and sum of amount earned for a given date, week, month, or year.
+  * Returns null if all parameters are equal to null
   *
   * @param $date date in the format YYYY-MM-DD
   * @param $week week in the format YYYY-WW
@@ -366,7 +375,9 @@ function addCustomer($firstName, $lastName) {
   * @return array containing item_name, sum of quantity as units_sold, sum of total_amount as earnings
   */
   function sales($date, $week, $month, $year) {
-    include("db_connection.php");
+    if(!$date AND !$week AND !$month AND !$year) return null;
+	
+	include("db_connection.php");
 
     if ($date != NULL) {
       $query = ("SELECT item_name, SUM(quantity) AS 'units_sold', SUM(order_item.total_amount) AS 'earnings' FROM item
@@ -462,6 +473,7 @@ function addCustomer($firstName, $lastName) {
 
   /*
   * Obtains distinct customer names and sales agent names for a given date, week, month, or year.
+  * Returns null if all parameters are equal to null
   *
   * @param $date date in the format YYYY-MM-DD
   * @param $week week in the format YYYY-WW
@@ -470,6 +482,8 @@ function addCustomer($firstName, $lastName) {
   * @return array containing distinct customer_name and agent_name
   */
   function customer($date, $week, $month, $year) {
+	if(!$date AND !$week AND !$month AND !$year) return null;
+	  
     include("db_connection.php");
 
     if ($date != NULL) {
@@ -573,6 +587,7 @@ function addCustomer($firstName, $lastName) {
 
   /*
   * Obtains distinct sales agent names for a given date, week, month, or year.
+  * Returns null if all parameters are equal to null
   *
   * @param $date date in the format YYYY-MM-DD
   * @param $week week in the format YYYY-WW
@@ -581,6 +596,8 @@ function addCustomer($firstName, $lastName) {
   * @return array containing distinct agent_name
   */
   function agent($date, $week, $month, $year) {
+	if(!$date AND !$week AND !$month AND !$year) return null;
+	
     include("db_connection.php");
 
     if ($date != NULL) {

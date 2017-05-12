@@ -11,13 +11,13 @@
 	require("header.php");
 ?>
 		<h1 class="w3-wide w3-center">CUSTOMER REPORT</h1>
-		<form method="post" action="customer.php">
+		<form method="post" action="customer.php" style="overflow:auto">
 			<a class="w3-button w3-black w3-section" id="dayB">DAY</a>
 			<a class="w3-button w3-black w3-section" id="weekB">WEEK</a>
 			<a class="w3-button w3-black w3-section" id="monthB">MONTH</a>
 			<a class="w3-button w3-black w3-section" id="yearB">YEAR</a>
 
-			<div  id="day">
+			<div id="day">
 				<input class="w3-input w3-border" id="dayInput" type="date" name="date">
 			</div>
 			<div id="week" style="display:none">
@@ -54,20 +54,28 @@
 					$month = getInput("month");
 					$year = getInput("year");
 					$customer = customer($date, $week, $month, $year);
-					foreach ($customer as $client) {
-						$customer_name = $client["customer_name"];
-						$agent_name = $client["agent_name"];
-						$orders = orders($customer_name, $date, $week, $month, $year);
-						$orders_made = $orders[0] ["orders_made"];
-						$total_amount = $orders[0] ["total_amount"];
-						echo
-						"<tr>
-						<td>$customer_name</td>
-						<td>$agent_name</td>
-						<td>$orders_made</td>
-						<td>$total_amount</td>
-						</tr>
-						";
+					
+					if($customer === null)
+						echo "<p class='w3-red w3-center'>Please input a date filter.</p>";
+					else {
+						if(count($customer) == 0)
+							echo "<p class='w3-gray w3-center'>No sales were made in the inputted time.</p>";
+					
+						foreach ($customer as $client) {
+							$customer_name = $client["customer_name"];
+							$agent_name = $client["agent_name"];
+							$orders = orders($customer_name, $date, $week, $month, $year);
+							$orders_made = $orders[0] ["orders_made"];
+							$total_amount = $orders[0] ["total_amount"];
+							echo
+							"<tr>
+							<td>$customer_name</td>
+							<td>$agent_name</td>
+							<td>" . number_format($orders_made) . "</td>
+							<td>" . number_format($total_amount/100, 2) . "</td>
+							</tr>
+							";
+						}
 					}
 				}
 			?>

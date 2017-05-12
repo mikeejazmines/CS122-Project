@@ -29,6 +29,16 @@
 	    	<form method="post">
 				<button name="button" value="log out" class="w3-padding-large w3-button w3-right">LOG OUT</button>
 			</form>
+			<?php
+				//Logs agent out
+				if ($_SERVER["REQUEST_METHOD"] == "POST") {
+					if(isset($_POST['button']) && $_POST['button'] == "log out") {
+						$_SESSION['agent_id'] = null;
+						$_SESSION['cart'] = array();
+						header("location: login.php");
+					}
+				}
+			?>
 	  	</div>
 	</div>
 

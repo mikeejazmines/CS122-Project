@@ -35,7 +35,19 @@
 		        <a href="agent.php" class="w3-bar-item w3-button">Agent</a>
       		</div>
     	</div>
-    	<a href ="login.php" class="w3-padding-large w3-button w3-right">LOG OUT</a>
+		<form method="post">
+			<button name="button" value="log out" class="w3-padding-large w3-button w3-right">LOG OUT</button>
+		</form>
+    	<?php
+			//Logs agent out
+			if ($_SERVER["REQUEST_METHOD"] == "POST") {
+				if(isset($_POST['button']) && $_POST['button'] == "log out") {
+					$_SESSION['agent_id'] = null;
+					$_SESSION['cart'] = array();
+					header("location: login.php");
+				}
+			}
+		?>
   	</div>
 </div>	
 	
@@ -117,14 +129,21 @@
 					}
 					$transactions = getTransactions($orderNumber, $firstAgent, $lastAgent, $firstCustomer, $lastCustomer, $dateType, $date);
 					
-					foreach($transactions as $transaction) {
-						echo "<tr>";
-						echo "<td>" . $transaction["date"] . "</td>";
-						echo "<td>" . $transaction["agent name"] . "</td>";
-						echo "<td>" . $transaction["customer name"] . "</td>";
-						echo "<td>" . $transaction["order number"] . "</td>";
-						echo "<td>" . number_format($transaction["total amount"], 2) . "</td>";
-						echo "</tr>";
+					if($transactions === null)
+						echo "<p class='w3-red w3-center'>Please input at least one filter.</p>";
+					else {
+						if(count($transactions) == 0)
+							echo "<p class='w3-gray w3-center'>No transactions matched your filters.</p>";
+						
+						foreach($transactions as $transaction) {
+							echo "<tr>";
+							echo "<td>" . $transaction["date"] . "</td>";
+							echo "<td>" . $transaction["agent name"] . "</td>";
+							echo "<td>" . $transaction["customer name"] . "</td>";
+							echo "<td>" . $transaction["order number"] . "</td>";
+							echo "<td>" . number_format($transaction["total amount"]/100, 2) . "</td>";
+							echo "</tr>";
+						}
 					}
 				}
 			?>

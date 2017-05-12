@@ -12,7 +12,7 @@
 ?>
 
 		<h1 class="w3-wide w3-center">SALES REPORT</h1>
-		<form method="post" action="sales.php">
+		<form method="post" action="sales.php" style="overflow:auto">
 			<a class="w3-button w3-black w3-section" id="dayB">DAY</a>
 			<a class="w3-button w3-black w3-section" id="weekB">WEEK</a>
 			<a class="w3-button w3-black w3-section" id="monthB">MONTH</a>
@@ -56,19 +56,26 @@
 					$year = getInput("year");
 					$sales = sales($date, $week, $month, $year);
 					
-					foreach ($sales as $item) {
-						$item_name = $item["item_name"];
-						$sold = $item["units_sold"];
-						$earnings = $item["earnings"];
-						$customerCount = customerCount($item_name, $date, $week, $month, $year);
-						$count = $customerCount[0] ["count"];
-						echo
-						"<tr>
-						<td>$item_name</td>
-						<td>$count</td>
-						<td>$sold</td>
-						<td>$earnings</td>
-						</tr>";
+					if($sales === null)
+						echo "<p class='w3-red w3-center'>Please input a date filter.</p>";
+					else {
+						if(count($sales) == 0)
+							echo "<p class='w3-gray w3-center'>No sales were made in the inputted time.</p>";
+						
+						foreach ($sales as $item) {
+							$item_name = $item["item_name"];
+							$sold = $item["units_sold"];
+							$earnings = $item["earnings"];
+							$customerCount = customerCount($item_name, $date, $week, $month, $year);
+							$count = $customerCount[0] ["count"];
+							echo
+							"<tr>
+							<td>" . ucwords($item_name) . "</td>
+							<td>" . number_format($count) . "</td>
+							<td>" . number_format($sold) . "</td>
+							<td>" . number_format($earnings/100, 2) . "</td>
+							</tr>";
+						}
 					}
 				}
 			?>
