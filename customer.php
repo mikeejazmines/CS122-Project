@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <?php
+	/*
+	* Requires functions.php that contains all required functions for page.
+	* Requires header.php that contains html code for header of the page.
+	*
+	* @Author: Joaquin Jacinto
+	*/
+	
 	require("functions.php");
-
-	include("header.php");
+	require("header.php");
 ?>
-
 		<h1 class="w3-wide w3-center">CUSTOMER REPORT</h1>
 		<form method="post" action="customer.php">
 			<a class="w3-button w3-black w3-section" id="dayB">DAY</a>
@@ -13,16 +18,16 @@
 			<a class="w3-button w3-black w3-section" id="yearB">YEAR</a>
 
 			<div  id="day">
-				<input class="w3-input w3-border" type="date" name="date">
+				<input class="w3-input w3-border" id="dayInput" type="date" name="date">
 			</div>
 			<div id="week" style="display:none">
-				<input class="w3-input w3-border" type="week" name="week">
+				<input class="w3-input w3-border" id="weekInput" type="week" name="week">
 			</div>
 			<div id="month" style="display:none">
-				<input class="w3-input w3-border" type="month" name="month">
+				<input class="w3-input w3-border" id="monthInput" type="month" name="month">
 			</div>
 			<div id="year" style="display:none">
-				<input class="w3-input w3-border" type="number" placeholder="yyyy" size="4" max="9999" min="1000" name="year">
+				<input class="w3-input w3-border" id="yearInput" type="number" placeholder="yyyy" size="4" max="9999" min="1000" name="year">
 			</div>
 
 		    <button class="w3-button w3-black w3-section w3-right" type="submit">SEARCH</button>
@@ -35,25 +40,26 @@
 				<th>Orders Made</th>
 				<th>Amount Spent</th>
 			</tr>
-
 			<?php
+				/*
+				* Takes and stores input from input boxes named "date", "week", "month", and "year" into respective variables.
+				* Retrieves contents of database throught customer method. Displays contents onto webpage.
+				*
+				* @Author: Joaquin Jacinto
+				*/
+				
 				if ($_SERVER["REQUEST_METHOD"] == "POST") {
-					$date = trim(filter_input(INPUT_POST, "date", FILTER_SANITIZE_STRING));
-					$week = trim(filter_input(INPUT_POST, "week", FILTER_SANITIZE_STRING));
-					$month = trim(filter_input(INPUT_POST, "month", FILTER_SANITIZE_STRING));
-					$year = trim(filter_input(INPUT_POST, "year", FILTER_SANITIZE_STRING));
-
+					$date = getInput("date");
+					$week = getInput("week");
+					$month = getInput("month");
+					$year = getInput("year");
 					$customer = customer($date, $week, $month, $year);
-
 					foreach ($customer as $client) {
 						$customer_name = $client["customer_name"];
 						$agent_name = $client["agent_name"];
-
 						$orders = orders($customer_name, $date, $week, $month, $year);
-
 						$orders_made = $orders[0] ["orders_made"];
 						$total_amount = $orders[0] ["total_amount"];
-
 						echo
 						"<tr>
 						<td>$customer_name</td>
@@ -67,7 +73,6 @@
 			?>
 		</table>
 	</div>
-
 	<script src="report.js"></script>
 </body>
 </html>

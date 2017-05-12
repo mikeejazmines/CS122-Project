@@ -10,6 +10,8 @@ function clicked(x){
 		var state = "none"
         if(i==x){
         	state = "initial";
+    	}else{
+    		document.getElementById(buttons[i] + "Input").value="";
     	}
         document.getElementById(buttons[i]).style.display = state;
 	}

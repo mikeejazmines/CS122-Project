@@ -26,7 +26,9 @@
 			        <a href="agent.php" class="w3-bar-item w3-button">Agent</a>
 	      		</div>
 	    	</div>
-	    	<a href ="login.php" class="w3-padding-large w3-button w3-right">LOG OUT</a>
+	    	<form method="post">
+				<button name="button" value="log out" class="w3-padding-large w3-button w3-right">LOG OUT</button>
+			</form>
 	  	</div>
 	</div>
 

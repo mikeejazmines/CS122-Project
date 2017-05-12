@@ -5,7 +5,6 @@ CREATE TABLE item (
   item_id         INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
   item_name       VARCHAR(255) NOT NULL,
   item_type       VARCHAR(255) NOT NULL,
-  color           VARCHAR(255) NOT NULL,
   srp             INT NOT NULL,
 
   CHECK(item_type in ('f', 'po', 'p'))
@@ -20,7 +19,7 @@ CREATE TABLE customer (
 CREATE TABLE sales_agent (
   agent_id        INT NOT NULL AUTO_INCREMENT UNIQUE PRIMARY KEY,
   first_name   	  VARCHAR(255) NOT NULL,
-  last_name		    VARCHAR(255) NOT NULL
+  last_name		  VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE order_form (
@@ -94,6 +93,7 @@ CREATE TABLE feature (
 CREATE TABLE stock (
   item_id         INT NOT NULL,
   quantity        INT NOT NULL,
+  color           VARCHAR(255) NOT NULL,
 
   FOREIGN KEY(item_id) REFERENCES item(item_id)
 );
